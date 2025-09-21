@@ -1,0 +1,65 @@
+.notification-panel {
+  position: absolute;
+  top: 64px;
+  right: 20px;
+  width: 380px;
+  max-height: 500px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+}
+
+.notification-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.notification-header h4 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.no-notifications {
+  padding: 30px;
+  text-align: center;
+  color: #757575;
+}
+
+.mat-list {
+  padding-top: 0;
+}
+
+.mat-list-item {
+  padding: 12px 20px !important;
+}
+
+.mat-list-item.unread {
+  background-color: #f4f7ff;
+}
+
+.mat-list-item:hover {
+  background-color: #f0f0f0;
+  cursor: pointer;
+}
+
+.mat-list-item .mat-line {
+  white-space: normal !important;
+}
+
+.timestamp {
+  font-size: 0.75rem;
+  color: #9e9e9e;
+  margin-top: 4px;
+}
+
+.mat-list-icon {
+  color: #3f51b5;
+  margin-right: 16px;
+}

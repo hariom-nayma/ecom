@@ -1,0 +1,35 @@
+<div class="container" *ngIf="product">
+  <mat-card class="product-detail-card">
+    <div class="row">
+      <div class="col-md-6">
+        <img mat-card-image [src]="product.imageUrl || 'https://via.placeholder.com/600x400'" alt="{{ product.name }}">
+      </div>
+      <div class="col-md-6">
+        <mat-card-header>
+          <mat-card-title>{{ product.name }}</mat-card-title>
+          <mat-card-subtitle>{{ product.categoryName }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p class="description">{{ product.description }}</p>
+          <p class="price">{{ product.discountPrice | currency:"INR" }} <span *ngIf="product.discountPercent > 0" class="original-price"><del>{{ product.price | currency:"INR" }}</del></span></p>
+          <p *ngIf="product.discountPercent > 0" class="discount">{{ product.discountPercent }}% off</p>
+          <p class="stock"><strong>Stock:</strong> {{ product.stock }}</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <ng-container *ngIf="getProductQuantity(product.id.toString()) === 0; else quantityControls">
+            <button mat-raised-button color="accent" (click)="addToCart(product)">
+              <mat-icon>add_shopping_cart</mat-icon> Add to Cart
+            </button>
+          </ng-container>
+          <ng-template #quantityControls>
+            <div class="quantity-controls">
+              <button mat-mini-fab color="warn" (click)="decreaseQuantity(product.id.toString())">-</button>
+              <span>{{ getProductQuantity(product.id.toString()) }}</span>
+              <button mat-mini-fab color="primary" (click)="increaseQuantity(product)">+</button>
+            </div>
+          </ng-template>
+        </mat-card-actions>
+      </div>
+    </div>
+  </mat-card>
+</div>

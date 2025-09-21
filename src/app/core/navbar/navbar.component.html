@@ -1,0 +1,120 @@
+<mat-toolbar color="primary" class="navbar mat-elevation-z6">
+  <mat-toolbar-row class="navbar-row-top">
+    <!-- Logo + Title -->
+    <div class="logo-section" routerLink="/">
+      <button mat-icon-button>
+        <mat-icon>store</mat-icon>
+      </button>
+     <img src="hariShop.png" alt="E-commerce Logo" class="logo-img">
+      <!-- <span class="app-title">SwiftCart</span> -->
+      
+    </div>
+
+    <span class="spacer"></span>
+
+    <!-- Search Bar -->
+    <div class="search-container desktop-search">
+      <mat-form-field appearance="outline" class="search-input">
+        <mat-label>Search products</mat-label>
+        <input title="search" matInput type="text" [(ngModel)]="searchTerm" (keyup.enter)="searchProducts()">
+        <button mat-icon-button matSuffix (click)="searchProducts()">
+          <mat-icon>search</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+
+    <!-- Desktop Navigation Links -->
+    <div class="nav-links desktop-nav">
+      <button mat-button routerLink="/products">Products</button>
+      <button mat-button *ngIf="isLoggedIn$ | async" routerLink="/orders">My Orders</button>
+      <button mat-button *ngIf="(isLoggedIn$ | async) && (isAdmin$ | async)" routerLink="/admin/dashboard">Admin</button>
+    </div>
+
+    <!-- Notifications -->
+    <button mat-icon-button *ngIf="isLoggedIn$ | async" (click)="navigateToNotifications()" class="notifications-btn">
+      <mat-icon matBadge="{{ unreadNotificationCount$ | async }}" matBadgeColor="warn">notifications</mat-icon>
+    </button>
+
+    <!-- Cart -->
+    <button mat-icon-button routerLink="/cart" class="cart-btn">
+      <mat-icon matBadge="{{ cartItemCount$ | async }}" matBadgeColor="warn">shopping_cart</mat-icon>
+    </button>
+
+    <!-- Auth Section -->
+    <ng-container *ngIf="!(isLoggedIn$ | async)">
+      <button mat-stroked-button class="login-btn" color="accent" (click)="openLoginDialog(true)">Login</button>
+      <button mat-flat-button class="register-btn" (click)="openLoginDialog(false)">Register</button>
+    </ng-container>
+
+    <!-- Profile Section -->
+    <ng-container *ngIf="isLoggedIn$ | async">
+      <div class="container" *ngIf="user">
+        <div class="email" onclick="this.classList.add('expand')">
+          <div class="from">
+            <div class="from-contents">
+              <div class="avatar me"></div>
+              <div class="name">{{user.name}}</div>
+            </div>
+          </div>
+          <div class="to">
+            <div class="to-contents">
+              <div class="top">
+                <div class="avatar-large me"></div>
+                <div class="name-large">{{user.name}}</div>
+                <div class="x-touch" onclick="document.querySelector('.email').classList.remove('expand');event.stopPropagation();">
+                  <div class="x">
+                    <div class="line1"></div>
+                    <div class="line2"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="bottom">
+                <div class="row">
+                  <!-- <svg class="mail" viewBox="0 0 300 244.18703">
+                    <g transform="translate(-539.17946,-568.85777)" id="layer1">
+                      <path id="path3611" style="fill:#1da1f2;fill-opacity:1;fill-rule:nonzero;stroke:none" d="m 633.89823,812.04479 c 112.46038,0 173.95627,-93.16765 173.95627,-173.95625 0,-2.64628 -0.0539,-5.28062 -0.1726,-7.90305 11.93799,-8.63016 22.31446,-19.39999 30.49762,-31.65984 -10.95459,4.86937 -22.74358,8.14741 -35.11071,9.62551 12.62341,-7.56929 22.31446,-19.54304 26.88583,-33.81739 -11.81284,7.00307 -24.89517,12.09297 -38.82383,14.84055 -11.15723,-11.88436 -27.04079,-19.31655 -44.62892,-19.31655 -33.76374,0 -61.14426,27.38052 -61.14426,61.13233 0,4.79784 0.5364,9.46458 1.58538,13.94057 -50.81546,-2.55686 -95.87353,-26.88582 -126.02546,-63.87991 -5.25082,9.03545 -8.27852,19.53111 -8.27852,30.73006 0,21.21186 10.79366,39.93837 27.20766,50.89296 -10.03077,-0.30992 -19.45363,-3.06348 -27.69044,-7.64676 -0.009,0.25652 -0.009,0.50661 -0.009,0.78077 0,29.60957 21.07478,54.3319 49.0513,59.93435 -5.13757,1.40062 -10.54335,2.15158 -16.12196,2.15158 -3.93364,0 -7.76596,-0.38716 -11.49099,-1.1026 7.78383,24.2932 30.35457,41.97073 57.11525,42.46543 -20.92578,16.40207 -47.28712,26.17062 -75.93712,26.17062 -4.92898,0 -9.79834,-0.28036 -14.58427,-0.84634 27.05868,17.34379 59.18936,27.46396 93.72193,27.46396"/>
+                    </g>
+                  </svg> -->
+                  <div class="link"><a>{{user.email}}</a></div>
+                </div>
+                <div class="row">
+                  <!-- <svg class="medium" viewBox="0 0 24 24">
+                    <style type="text/css" id="style2">
+                      .st0{fill:#3DD87F;}
+                      .st1{fill:#FFFFFF;}
+                    </style>
+                    <g id="Page-1" transform="translate(0,1)">
+                      <g id="Monogram">
+                        <rect id="Rectangle-path" x="0" y="-1" class="st0" width="24" height="24" style="fill:#000000;fill-opacity:1;stroke-width:1.090909"/>
+                        <path id="Shape" class="st1" d="m 6.3,7.6 c 0,-0.2 -0.1,-0.4 -0.2,-0.5 l -1.3,-1.7 v -0.2 h 4.3 l 3.3,7.3 2.9,-7.3 h 4.1 v 0.2 l -1.2,1.1 c -0.1,0.1 -0.2,0.2 -0.1,0.3 v 8.3 c 0,0.1 0,0.3 0.1,0.3 l 1.2,1.1 v 0.2 h -5.8 v -0.2 l 1.2,-1.2 c 0.1,-0.1 0.1,-0.2 0.1,-0.3 v -6.6 l -3.3,8.4 h -0.4 l -4,-8.4 v 5.6 c 0,0.2 0,0.5 0.2,0.6 l 1.6,1.9 v 0.2 h -4.4 v -0.2 l 1.5,-1.8 c 0.2,-0.2 0.2,-0.4 0.2,-0.6 z" inkscape:connector-curvature="0" style="fill:#ffffff"/>
+                      </g>
+                    </g>
+                  </svg> -->
+                  <div class="link" (click)="logout()"><a>Log out</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- Mobile Menu Toggle -->
+    <button mat-icon-button class="mobile-menu-toggle" [matMenuTriggerFor]="mobileMenu">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <mat-menu #mobileMenu="matMenu">
+      <button mat-menu-item routerLink="/products">Products</button>
+      <button mat-menu-item *ngIf="isLoggedIn$ | async" routerLink="/orders">My Orders</button>
+      <button mat-menu-item *ngIf="(isLoggedIn$ | async) && (isAdmin$ | async)" routerLink="/admin/dashboard">Admin</button>
+      <button mat-menu-item *ngIf="isLoggedIn$ | async" routerLink="/addresses">My Addresses</button>
+      <ng-container *ngIf="!(isLoggedIn$ | async)">
+        <button mat-menu-item (click)="openLoginDialog(true)">Login</button>
+        <button mat-menu-item (click)="openLoginDialog(false)">Register</button>
+      </ng-container>
+      <button mat-menu-item *ngIf="isLoggedIn$ | async" (click)="logout()">Logout</button>
+    </mat-menu>
+  </mat-toolbar-row>
+
+  
+</mat-toolbar>

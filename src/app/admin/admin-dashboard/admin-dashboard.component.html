@@ -1,0 +1,102 @@
+<div class="dashboard-container" id="contentToConvert">
+  <div class="dashboard-header">
+    <button (click)="downloadPdf()">Download PDF</button>
+  </div>
+  <!-- Summary Cards -->
+  <div class="cards-grid">
+    <div class="card">
+      <div class="card-icon"><i class="fas fa-users"></i></div>
+      <div class="card-info">
+        <div class="card-title">Total Users</div>
+        <div class="card-value">{{ totalUsers }}</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-icon"><i class="fas fa-box-open"></i></div>
+      <div class="card-info">
+        <div class="card-title">Total Products</div>
+        <div class="card-value">{{ totalProducts }}</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-icon"><i class="fas fa-shopping-cart"></i></div>
+      <div class="card-info">
+        <div class="card-title">Total Orders</div>
+        <div class="card-value">{{ totalOrders }}</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-icon"><i class="fas fa-rupee-sign"></i></div>
+      <div class="card-info">
+        <div class="card-title">Revenue</div>
+        <div class="card-value">{{ totalRevenue }}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Charts -->
+  <div class="charts-grid">
+
+    <div class="chart-card">
+      <h3 class="chart-title">Product By status</h3>
+      <div class="chart-container">
+        <canvas id="topSellingProductsChart"></canvas>
+      </div>
+    </div>
+
+    
+
+        <div class="chart-card">
+      <h3 class="chart-title">New Customers Last 7 Days</h3>
+      <div class="chart-container">
+        <canvas id="newCustomersChart"></canvas>
+      </div>
+    </div>
+    
+    <div class="chart-card full-width">
+      <h3 class="chart-title">Revenue Over Time</h3>
+      <div class="filter-controls">
+        <mat-form-field appearance="outline">
+          <mat-label>Select Month</mat-label>
+          <mat-select [(ngModel)]="selectedMonth" (selectionChange)="onMonthChange()">
+            <mat-option *ngFor="let month of availableMonths" [value]="month.value">
+              {{ month.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="chart-container">
+        <canvas id="monthlyRevenueChart"></canvas>
+      </div>
+    </div>
+
+    <div>
+    <div class="chart-card full-width">
+      <h3 class="chart-title">Orders by Status and Date</h3>
+      <div class="filter-controls">
+        <!-- <label for="startDate">Start Date:</label>
+        <input type="date" id="startDate" [(ngModel)]="startDate" (change)="loadOrdersByStatusAndDate()">
+
+        <label for="endDate">End Date:</label>
+        <input type="date" id="endDate" [(ngModel)]="endDate" (change)="loadOrdersByStatusAndDate()">
+ -->
+
+      </div>
+      <div class="chart-container">
+        <canvas id="orderStatusByDateChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-card">
+      <h3 class="chart-title">Total Brand Sales</h3>
+      <div class="filter-controls"> 
+          <label for="date">Date:</label>
+        <input type="date" id="date" [(ngModel)]="date" (change)="loadBrandSalesDataByDate()">
+      </div>
+      <div class="chart-container">
+        <canvas id="brandSalesChart"></canvas>
+      </div>
+    </div>
+</div>
+</div>

@@ -1,0 +1,103 @@
+<mat-card class="order-management-card">
+  <mat-card-header class="card-header">
+    <mat-card-title>Order Management</mat-card-title>
+
+    <mat-form-field appearance="outline" class="filter-field">
+      <mat-label>Filter Orders</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Search by ID, User, Status...">
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div class="table-container">
+      <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+        <!-- ID -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Order ID</th>
+          <td mat-cell *matCellDef="let order">#{{order.id}}</td>
+        </ng-container>
+
+        
+
+        <!-- Status -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+          <td mat-cell *matCellDef="let order">
+            <span class="status-badge" [ngClass]="order.status.toLowerCase()">
+              {{order.status}}
+            </span>
+          </td>
+        </ng-container>
+
+        <!-- Actions -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let order" class="actions-cell">
+            <button mat-stroked-button color="primary"
+                    (click)="moveToNextStatus(order)"
+                    [disabled]="!canMoveToNext(order)">
+              Next Step
+            </button>
+            <button mat-stroked-button color="accent"
+                    (click)="returnRequestAccept(order)"
+                    [disabled]="order.status !== 'RETURN_REQUESTED'">
+             Accept Return
+            </button>
+            <button mat-stroked-button color="warn"
+                    (click)="cancelOrder(order)"
+                    [disabled]="order.status === 'CANCELLED' || order.status === 'DELIVERED'">
+              Cancel
+            </button>
+            <button mat-icon-button color="accent"
+                    (click)="viewOrderDetails(order)" matTooltip="View Details">
+              <mat-icon>info</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        <!-- No Data -->
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="5">No orders found</td>
+        </tr>
+      </table>
+    </div>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  </mat-card-content>
+</mat-card>
+
+<!-- Order Details Dialog -->
+<ng-template #orderDetailsDialog let-order>
+  <h2 mat-dialog-title>Order #{{order.id}} Details</h2>
+  <mat-dialog-content class="order-details-content">
+    <p><strong>User:</strong> {{order.user?.name}} ({{order.userEmail}})</p>
+    <p><strong>Total:</strong> {{order.total | currency}}</p>
+    <p><strong>Status:</strong> {{order.status}}</p>
+
+    <!-- Stepper Progress -->
+    <div class="stepper">
+      <div *ngFor="let s of orderStatues; let i=index"
+           class="step" [ngClass]="{active: order.status === s, completed: orderStatues.indexOf(order.status) > i}">
+        <div class="circle">{{i+1}}</div>
+        <p>{{s}}</p>
+      </div>
+    </div>
+
+    <h3>Items:</h3>
+    <mat-list>
+      <mat-list-item *ngFor="let item of order.items">
+        <img matListItemAvatar [src]="item.imageUrl" alt="Product Image" class="product-thumbnail">
+        <h4 mat-line>{{item.productName}}</h4>
+        <p mat-line>Qty: {{item.quantity}} | Price: {{item.unitPrice | currency}}</p>
+      </mat-list-item>
+    </mat-list>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Close</button>
+  </mat-dialog-actions>
+</ng-template>

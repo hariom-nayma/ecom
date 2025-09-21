@@ -1,0 +1,21 @@
+<div class="notifications-container">
+  <h2>Admin Notifications</h2>
+  <ul class="notification-list">
+    <li *ngFor="let notification of notifications"
+        (click)="onNotificationClick(notification)"
+        [class.read]="notification.isRead">
+      <p>{{ notification.message }}</p>
+      <span class="timestamp">{{ notification.timestamp | date:'short' }}</span>
+    </li>
+  </ul>
+</div>
+
+<div *ngIf="selectedNotification" class="popup-overlay" (click)="closePopup()">
+  <div class="popup-content" (click)="$event.stopPropagation()">
+    <h3>Notification Details</h3>
+    <p><strong>Type:</strong> {{ selectedNotification?.type }}</p>
+    <p><strong>Message:</strong> {{ selectedNotification?.message }}</p>
+    <p><strong>Timestamp:</strong> {{ selectedNotification?.timestamp | date:'short' }}</p>
+    <button (click)="closePopup()">Close</button>
+  </div>
+</div>

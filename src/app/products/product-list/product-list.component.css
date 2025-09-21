@@ -1,0 +1,139 @@
+.product-list-page {
+  display: flex;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 280px;
+  padding: 20px;
+  background-color: #fff;
+  border-right: 1px solid #e0e0e0;
+}
+
+.filters {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.filter-info {
+  font-size: 0.85rem;
+  color: #555;
+  margin-top: -10px;
+}
+
+.main-content {
+  flex: 1;
+  padding: 20px;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  background-color: #fff;
+  padding: 10px 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.search-bar {
+  width: 350px;
+}
+
+.sort-select {
+  width: 200px;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.product-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #fff;
+}
+
+mat-card-content {
+  flex-grow: 1;
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.image-container {
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-container img {
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.price {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #111;
+}
+
+.original-price {
+  font-size: 0.9rem;
+  margin-left: 8px;
+  color: #888;
+}
+
+.discount {
+  font-size: 0.9rem;
+  color: #388e3c;
+  font-weight: 500;
+}
+
+.ratings {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 10px;
+}
+
+.stars {
+  color: #ff9f00;
+  font-weight: bold;
+}
+
+.review-count {
+  color: #878787;
+  font-size: 0.9rem;
+}
+
+.description {
+  color: #555;
+  font-size: 0.9rem;
+}
+
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.no-products {
+  text-align: center;
+  padding: 50px;
+  background-color: #fff;
+  border-radius: 8px;
+  margin-top: 20px;
+}

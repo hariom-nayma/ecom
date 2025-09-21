@@ -17,7 +17,8 @@
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
-              "zone.js"
+              "src/polyfills.ts",
+              "Zone.js"
             ],
             "tsConfig": "tsconfig.app.json",
             "assets": [
@@ -27,6 +28,8 @@
               }
             ],
             "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "@angular/material/prebuilt-themes/azure-blue.css",
               "src/styles.css"
             ],
             "scripts": [],
@@ -67,8 +70,7 @@
               "buildTarget": "ecom-frontend:build:production"
             },
             "development": {
-              "buildTarget": "ecom-frontend:build:development"
-            }
+              "buildTarget": "ecom-frontend:build:development"            }
           },
           "defaultConfiguration": "development"
         },
@@ -90,6 +92,8 @@
               }
             ],
             "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "@angular/material/prebuilt-themes/azure-blue.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -97,5 +101,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "e6ba292e-8630-4279-a4c1-56351e2114f3"
   }
 }

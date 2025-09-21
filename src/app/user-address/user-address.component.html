@@ -1,0 +1,38 @@
+<div class="address-container">
+  <mat-card class="address-list-card">
+    <mat-card-header class="header">
+      <mat-card-title>Your Saved Addresses</mat-card-title>
+      <button mat-raised-button color="primary" (click)="openAddAddressDialog()" class="add-btn">
+        <mat-icon>add</mat-icon> Add Address
+      </button>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div *ngIf="addresses.length === 0" class="no-addresses">
+        <mat-icon>location_off</mat-icon>
+        <p>No addresses saved yet.</p>
+      </div>
+
+      <!-- Grid of Address Cards -->
+      <div class="address-grid" *ngIf="addresses.length > 0">
+        <mat-card class="address-card" *ngFor="let address of addresses">
+          <mat-card-header>
+            <mat-icon mat-card-avatar>location_on</mat-icon>
+            <mat-card-title>{{ address.street }}</mat-card-title>
+            <mat-card-subtitle>{{ address.city }}, {{ address.state }} {{ address.zipCode }}</mat-card-subtitle>
+          </mat-card-header>
+
+          <mat-card-content>
+            <span class="type-chip" [ngClass]="address.type.toLowerCase()">{{ address.type }}</span>
+          </mat-card-content>
+
+          <mat-card-actions align="end">
+            <button mat-icon-button color="warn" (click)="deleteAddress(address.id)" matTooltip="Delete Address">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

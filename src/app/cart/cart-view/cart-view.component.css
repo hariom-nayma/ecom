@@ -1,0 +1,79 @@
+.container {
+  margin-top: 20px;
+}
+
+mat-card {
+  padding: 20px;
+}
+
+.alert-info {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #e0f2f7;
+  border-color: #b3e5fc;
+  color: #01579b;
+  border-radius: 4px;
+}
+
+.mat-table {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.mat-column-quantity {
+  width: 120px;
+}
+
+.quantity-input {
+  width: 80px;
+}
+
+.summary-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.address-selection-section {
+  margin-top: 20px;
+  padding: 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.address-selection-section h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #3f51b5;
+}
+
+.address-radio-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.address-radio-button {
+  margin-bottom: 10px;
+}
+
+.add-address-button {
+  width: fit-content;
+}
+
+
+.total-checkout {
+  text-align: right;
+}
+
+.total-checkout h3 {
+  margin-bottom: 10px;
+  color: #3f51b5;
+}
+
+.mat-raised-button {
+  margin-top: 10px;
+}

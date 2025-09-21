@@ -1,0 +1,26 @@
+<div class="admin-wrapper" [class.sidebar-collapsed]="isSidebarCollapsed">
+  <!-- Sidebar -->
+  <nav class="sidebar">
+    <h2 class="logo">Admin Panel</h2>
+    <ul class="menu">
+      <li><a routerLink="/admin/dashboard" routerLinkActive="active">Dashboard</a></li>
+      <li><a routerLink="/admin/users" routerLinkActive="active">Manage Users</a></li>
+      <li><a routerLink="/admin/products" routerLinkActive="active">Manage Products</a></li>
+      <li><a routerLink="/admin/orders" routerLinkActive="active">Manage Orders</a></li>
+      <li><a routerLink="/admin/notifications" routerLinkActive="active">Check Admin Notifications</a></li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <header class="main-header">
+      <button class="hamburger" (click)="toggleSidebar()">
+        &#9776;
+      </button>
+      <h1 class="header-title">Dashboard</h1>
+    </header>
+    <div class="content-area">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

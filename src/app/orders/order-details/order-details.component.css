@@ -1,0 +1,134 @@
+.order-container {
+  padding: 20px;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  border-radius: 12px;
+  padding: 15px;
+  transition: transform 0.2s ease;
+}
+
+.glass-card:hover {
+  transform: translateY(-3px);
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.order-tracker {
+  display: flex;
+  justify-content: space-between;
+  margin: 30px 0;
+  position: relative;
+}
+
+.step {
+  text-align: center;
+  flex: 1;
+  position: relative;
+}
+
+.circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  background: #fff;
+  transition: all 0.3s ease;
+}
+
+.step.active .circle {
+  border-color: #4caf50;
+}
+
+.step.completed .circle {
+  background: #4caf50;
+  color: white;
+  border-color: #4caf50;
+}
+
+.line {
+  position: absolute;
+  top: 20px;
+  left: 0%;
+  width: 100%;
+  height: 2px;
+  background: #ccc;
+  z-index: -1;
+}
+
+.line.completed {
+  background: #4caf50;
+}
+
+.products {
+  flex: 2;
+}
+
+.product-card {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.product-card img {
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  margin-right: 15px;
+}
+
+.details {
+  flex: 1;
+}
+
+.price {
+  font-weight: bold;
+  color: #333;
+}
+
+.status-pill {
+  background: #ff9800;
+  padding: 3px 8px;
+  border-radius: 12px;
+  color: white;
+  font-size: 12px;
+}
+
+.side-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.payment-line {
+  display: flex;
+  justify-content: space-between;
+  margin: 5px 0;
+}
+
+.total {
+  font-weight: bold;
+  border-top: 1px solid #ddd;
+  padding-top: 5px;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}

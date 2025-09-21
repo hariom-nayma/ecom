@@ -1,0 +1,74 @@
+<div class="container">
+  <mat-card>
+    <mat-card-title>Shopping Cart</mat-card-title>
+    <mat-card-content>
+      <div *ngIf="cartItems.length === 0" class="alert alert-info">Your cart is empty.</div>
+      <div *ngIf="cartItems.length > 0">
+        <table mat-table [dataSource]="cartItems" class="mat-elevation-z8">
+
+          <!-- Product Column -->
+          <ng-container matColumnDef="product">
+            <th mat-header-cell *matHeaderCellDef> Product </th>
+            <td mat-cell *matCellDef="let element"> {{element.product.name}} </td>
+          </ng-container>
+
+          <!-- Quantity Column -->
+          <ng-container matColumnDef="quantity">
+            <th mat-header-cell *matHeaderCellDef> Quantity </th>
+            <td mat-cell *matCellDef="let element">
+              <mat-form-field appearance="outline" class="quantity-input">
+                <input title="Quantity" matInput type="number" [(ngModel)]="element.quantity" min="1">
+              </mat-form-field>
+            </td>
+          </ng-container>
+
+          <!-- Price Column -->
+          <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef> Price </th>
+            <td mat-cell *matCellDef="let element"> {{element.product.discountPrice | currency:"INR"}} </td>
+          </ng-container>
+
+          <!-- Total Column -->
+          <ng-container matColumnDef="total">
+            <th mat-header-cell *matHeaderCellDef> Total </th>
+            <td mat-cell *matCellDef="let element"> {{(element.product.discountPrice * element.quantity) | currency:"INR"}} </td>
+          </ng-container>
+
+          <!-- Actions Column -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef> Actions </th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-icon-button color="warn" (click)="removeFromCart(element.product.id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <div class="summary-section">
+          <div class="address-selection-section">
+            <h3>Choose Shipping Address</h3>
+            <mat-radio-group [(ngModel)]="selectedAddressId" class="address-radio-group">
+              <mat-radio-button *ngFor="let address of addresses" [value]="address.id" class="address-radio-button">
+                {{ address.street }}, {{ address.city }}, {{ address.state }} {{ address.zipCode }} ({{ address.type }})
+              </mat-radio-button>
+            </mat-radio-group>
+            <button mat-raised-button color="accent" (click)="openAddAddressDialog()">
+              <mat-icon>add</mat-icon> Add New Address
+            </button>
+          </div>
+
+          <div class="total-checkout">
+            <h3>Total: {{ getTotal() | currency:"INR" }}</h3>
+            <button mat-raised-button color="primary" (click)="checkout()" [disabled]="!selectedAddressId">
+              <mat-icon>payment</mat-icon> Checkout
+            </button>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

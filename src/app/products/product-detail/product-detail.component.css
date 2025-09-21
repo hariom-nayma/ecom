@@ -1,0 +1,71 @@
+.product-detail-card {
+  margin-top: 20px;
+  padding: 20px;
+}
+
+.product-detail-card img {
+  width: 100%;
+  height: auto;
+  max-height: 400px;
+  object-fit: contain;
+  margin-bottom: 20px;
+}
+
+.product-detail-card .mat-card-title {
+  font-size: 2.5em;
+  margin-bottom: 10px;
+}
+
+.product-detail-card .mat-card-subtitle {
+  font-size: 1.2em;
+  color: #757575;
+  margin-bottom: 20px;
+}
+
+.product-detail-card .description {
+  font-size: 1.1em;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.product-detail-card .price {
+  font-size: 2em;
+  font-weight: bold;
+  color: #3f51b5; /* Primary color */
+  margin-bottom: 5px;
+}
+
+.product-detail-card .original-price {
+  font-size: 0.7em;
+  color: #9e9e9e;
+  margin-left: 10px;
+}
+
+.product-detail-card .discount {
+  font-size: 1.2em;
+  color: #f44336; /* Accent color */
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.product-detail-card .stock {
+  font-size: 1.1em;
+  margin-bottom: 20px;
+}
+
+.product-detail-card .mat-card-actions {
+  padding: 0 16px 16px;
+}
+
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Space between buttons and quantity */
+}
+
+.quantity-controls span {
+  font-size: 1.1em;
+  font-weight: bold;
+  min-width: 20px; /* Ensure enough space for quantity number */
+  text-align: center;
+}

@@ -1,0 +1,140 @@
+<div class="product-list-page">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h3>Filters</h3>
+    <div class="filters">
+      
+<mat-label>Max Price</mat-label>
+<mat-slider min="0" max="500000" step="500" (input)="onFilterChange()">
+  <input title="maxPrice" matSliderThumb [(ngModel)]="maxPrice">
+</mat-slider>
+<p class="filter-info">Up to ₹{{ maxPrice }}</p>
+
+<mat-label>Min Discount</mat-label>
+<mat-slider min="0" max="80" step="5" (input)="onFilterChange()">
+  <input title="minDiscount" matSliderThumb [(ngModel)]="minDiscount">
+</mat-slider>
+<p class="filter-info">{{ minDiscount }}% or more</p>
+
+
+      <!-- Price -->
+      <!-- <mat-label>Max Price</mat-label>
+      <mat-slider min="0" max="100000" step="500" [(ngModel)]="maxPrice" (input)="onFilterChange()" thumbLabel tickInterval="10000"></mat-slider>
+      <p class="filter-info">Up to ₹{{ maxPrice }}</p> -->
+
+      <!-- Discount -->
+      <!-- <mat-label>Minimum Discount</mat-label>
+      <mat-slider min="0" max="80" step="10" [(ngModel)]="minDiscount" (input)="onFilterChange()" thumbLabel tickInterval="10"></mat-slider>
+      <p class="filter-info">{{ minDiscount }}% or more</p> -->
+
+      <!-- Rating -->
+      <mat-label>Customer Ratings</mat-label>
+      <mat-radio-group [(ngModel)]="minRating" (change)="onFilterChange()">
+        <mat-radio-button [value]="4">4★ & above</mat-radio-button>
+        <mat-radio-button [value]="3">3★ & above</mat-radio-button>
+        <mat-radio-button [value]="2">2★ & above</mat-radio-button>
+        <mat-radio-button [value]="1">1★ & above</mat-radio-button>
+      </mat-radio-group>
+
+      <!-- Stock -->
+      <mat-checkbox [(ngModel)]="inStockOnly" (ngModelChange)="onFilterChange()">In Stock Only</mat-checkbox>
+
+      <!-- Multi-category -->
+      <mat-form-field>
+        <mat-label>Categories</mat-label>
+        <mat-select [(ngModel)]="selectedCategoryName" (selectionChange)="onFilterChange()">
+          <mat-option *ngFor="let category of categories" [value]="category.name">{{ category.name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Brands -->
+      <mat-form-field>
+        <mat-label>Brands</mat-label>
+        <mat-select [(ngModel)]="selectedBrands" multiple (selectionChange)="onFilterChange()">
+          <mat-option *ngFor="let brand of brands" [value]="brand">{{ brand }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Clear filters -->
+      <button mat-stroked-button color="warn" (click)="clearFilters()">Clear All Filters</button>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="toolbar">
+      <mat-form-field class="search-bar">
+        <mat-label>Search Products</mat-label>
+        <input matInput [(ngModel)]="searchTerm" (ngModelChange)="onFilterChange()" placeholder="Search by name or description">
+      </mat-form-field>
+
+      <mat-form-field class="sort-select">
+        <mat-label>Sort By</mat-label>
+        <mat-select [(ngModel)]="sortBy" (selectionChange)="onFilterChange()">
+          <mat-option value="price-asc">Price: Low to High</mat-option>
+          <mat-option value="price-desc">Price: High to Low</mat-option>
+          <mat-option value="discount-desc">Discount: High to Low</mat-option>
+          <mat-option value="rating-desc">Customer Rating</mat-option>
+          <mat-option value="newest">Newest First</mat-option>
+          <mat-option value="name-asc">Name A-Z</mat-option>
+          <mat-option value="name-desc">Name Z-A</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="products-grid">
+  <mat-card class="product-card" *ngFor="let product of products">                                       
+    <div class="image-container">
+          <img mat-card-image [src]="product.imageUrl || 'https://via.placeholder.com/400x300'" alt="{{ product.name }}">
+        </div>
+        <mat-card-header>
+          <mat-card-title>{{ product.name }}</mat-card-title>
+          <mat-card-subtitle>{{ product.brand }} • {{ product.categoryName }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+                    <div class="ratings">
+            <span class="stars">⭐ {{ product.ratings }}</span>
+            <span class="review-count">({{ product.reviewCount }} reviews)</span>
+          </div>
+          <p class="price">
+            {{ product.discountPrice | currency:"INR" }}
+            <span *ngIf="product.discountPercent > 0" class="original-price">
+              <del>{{ product.price | currency:"INR" }}</del>
+            </span>
+          </p>
+          <h6 *ngIf="product.stock=== 0" class="text-danger">Out of Stock</h6>
+          <h6 *ngIf="product.stock > 0 && product.stock <=5" class="text-warning">Only {{product.stock}} left in stock</h6>
+          <h6 *ngIf="product.stock > 5" class="text-success">In Stock</h6>
+          <p *ngIf="product.discountPercent > 0" class="discount">{{ product.discountPercent }}% off</p>
+          <p class="description">{{ product.description | slice:0:80 }}...</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-stroked-button color="primary" [routerLink]="['/products', product.id]">View Details</button>
+
+          <ng-container *ngIf="getProductQuantity(product.id.toString()) === 0; else quantityControls">
+            <button *ngIf="product.stock!=0" mat-flat-button color="accent" (click)="addToCart(product)">Add to Cart</button>
+          </ng-container>
+          <ng-template #quantityControls>
+            <div class="quantity-controls">
+              <button mat-mini-fab color="warn" (click)="decreaseQuantity(product.id.toString())">-</button>
+              <span>{{ getProductQuantity(product.id.toString()) }}</span>
+              <button mat-mini-fab color="primary" (click)="increaseQuantity(product)">+</button>
+            </div>
+          </ng-template>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+
+    <div *ngIf="products.length === 0" class="no-products">
+      <p>No products found 🚫</p>
+    </div>
+
+    <mat-paginator [length]="totalElements"
+                   [pageSize]="pageSize"
+                   [pageIndex]="pageIndex"
+                   [pageSizeOptions]="[6, 12, 24, 96]"
+                   (page)="onPageChange($event)"
+                   aria-label="Select page of products">
+    </mat-paginator>
+  </main>
+</div>

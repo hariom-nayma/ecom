@@ -1,0 +1,25 @@
+<div class="notifications-container">
+  <h2 class="title">🔔 Your Notifications</h2>
+
+  <div *ngIf="notifications.length === 0" class="no-notifications">
+    <p>No new notifications</p>
+  </div>
+
+  <div class="notification-cards-wrapper" [@listAnimation]>
+    <mat-card *ngFor="let notification of notifications" 
+              class="notification-card" 
+              [class.read]="notification.isRead"
+              (click)="onNotificationClick(notification)">
+      <mat-card-header>
+        <mat-icon mat-card-avatar [ngClass]="{'read-icon': notification.isRead}">
+          {{ getNotificationIcon(notification.type) }}
+        </mat-icon>
+        <mat-card-title>{{ formatNotificationType(notification.type) }}</mat-card-title>
+        <mat-card-subtitle>{{ notification.timestamp | date:'short' }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p>{{ notification.message }}</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

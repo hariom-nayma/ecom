@@ -1,0 +1,135 @@
+<div class="order-container" *ngIf="order">
+  <!-- Header -->
+  <div class="order-header glass-card">
+  <div>
+    <h3>Order #{{ order.id }}</h3>
+    <small>{{ order.items.length }} items</small>
+  </div>
+
+  <div class="header-right">
+    <div class="price-block">
+      <div class="final-amt">{{ order.totalAmount| currency:'INR' }}</div>
+      <div class="original-and-savings">
+        <span class="original-total" *ngIf="getSavings() > 0">
+          <s>{{ order.withoutDiscountAmount | currency:'INR' }}</s>
+        </span>
+        <div class="savings-chip" *ngIf="order.savings > 0">
+  <span class="spark">✨</span>
+  You saved {{ order.savings | currency:'INR' }}
+  ({{ getSavingsPercent() }}% off)
+</div>
+      </div>
+    </div>
+  </div>
+
+  <div>{{ order.createdAt | date:'mediumDate' }}</div>
+</div>
+  <!-- Progress Tracker -->
+  <div *ngIf="!isTerminalStatus" class="order-tracker">
+    <div class="step" [ngClass]="{ active: step >= 1, completed: step > 1 }">
+      <div class="circle"><mat-icon>check_circle</mat-icon></div>
+      <p>Confirmed</p>
+      <small>{{ getTimestampForStatus(OrderStatus.PENDING) | date:'short' }}</small>
+    </div>
+    <div class="line" [ngClass]="{ completed: step > 1 }"></div>
+
+    <div class="step" [ngClass]="{ active: step >= 2, completed: step > 2 }">
+      <div class="circle"><mat-icon>inventory_2</mat-icon></div>
+      <p>Packed</p>
+      <small>{{ getTimestampForStatus(OrderStatus.PROCESSING) | date:'short' }}</small>
+    </div>
+    <div class="line" [ngClass]="{ completed: step > 2 }"></div>
+
+    <div class="step" [ngClass]="{ active: step >= 3, completed: step > 3 }">
+      <div class="circle"><mat-icon>local_shipping</mat-icon></div>
+      <p>Shipped</p>
+      <small>{{ getTimestampForStatus(OrderStatus.SHIPPED) | date:'short' }}</small>
+    </div>
+    <div class="line" [ngClass]="{ completed: step > 3 }"></div>
+
+    <div class="step" [ngClass]="{ active: step >= 3, completed: step > 3 }">
+      <div class="circle"><mat-icon>home</mat-icon></div>
+      <p>Delivered</p>
+      <small>{{ getTimestampForStatus(OrderStatus.DELIVERED) | date:'short' }}</small>
+    </div>
+  </div>
+
+  <!-- Terminal -->
+  <div *ngIf="isTerminalStatus" class="terminal-status glass-card">
+    <h3>Status: {{ order?.status }}</h3>
+    <p *ngIf="order?.status === OrderStatus.CANCELLED">❌ This order has been cancelled.</p>
+    <p *ngIf="order?.status === OrderStatus.RETURN_REQUESTED">↩️ Return requested.</p>
+    <p *ngIf="order?.status === OrderStatus.RETURNED">✔️ Order returned.</p>
+  </div>
+
+  <!-- Body -->
+  <div class="order-body">
+    <!-- Products -->
+    <!-- Product card: show per-item original & saved -->
+<div class="product-card glass-card" *ngFor="let item of order.items">
+  <img [src]="item.imageUrl || 'https://via.placeholder.com/80'" alt="product">
+  <div class="details">
+    <div class="product-title">{{ item.productName }}</div>
+    <small>Qty: {{ item.quantity }}</small>
+
+    <div class="price-row">
+      <div class="price">
+        <!-- assume item.unitPrice is original unit price -->
+        <span class="final-price">{{ order.totalAmount | currency:'INR' }}</span>
+        <span class="original-price" *ngIf="order.savings"><s>{{ order.withoutDiscountAmount | currency:'INR' }}</s></span>
+      </div>
+
+      <div class="item-saved" *ngIf="getItemSavings(item) > 0">
+        <mat-icon class="save-icon">local_offer</mat-icon>
+        <span>Saved {{ getItemSavings(item) | currency:'INR' }}</span>
+      </div>
+    </div>
+
+    <div class="status">
+      <span class="status-pill">{{ order.status }}</span>
+      <span *ngIf="order.deliveryDate">Arriving by {{ order.deliveryDate | date:'shortDate' }}</span>
+    </div>
+  </div>
+</div>
+
+
+    <!-- Delivery + Payment -->
+    <div class="side-info">
+      <div class="box glass-card">
+        <h4>Delivery Address</h4>
+        <p><b>{{ order.shippingAddress }}</b></p>
+        <p>{{ order.userEmail }}</p>
+      </div>
+
+      <div class="box glass-card">
+        <h4>Payment details</h4>
+        <div class="payment-line">
+          <span>Item Total</span>
+          <span>{{ order.withoutDiscountAmount | currency:"INR"}}</span>
+        </div>
+        <div class="payment-line green" *ngIf="order.savings > 0">
+          <span>Coupon savings</span>
+          <span>- {{ order.savings | currency:"INR" }}</span>
+        </div>
+        <div class="payment-line">
+          <span>Delivery</span>
+          <span>FREE</span>
+        </div>
+        <div class="payment-line total">
+          <span>Total</span>
+          <span>{{ order.totalAmount | currency:"INR" }}</span>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="actions">
+        <button mat-stroked-button color="primary" (click)="downloadInvoice()">
+          <mat-icon>download</mat-icon> Invoice
+        </button>
+        <button *ngIf="isReturnable()" mat-raised-button color="warn" (click)="returnOrder()">
+          <mat-icon>assignment_return</mat-icon> Return
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

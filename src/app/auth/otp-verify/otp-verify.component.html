@@ -1,0 +1,21 @@
+<div class="otp-container">
+  <mat-card>
+    <mat-card-title>Verify OTP</mat-card-title>
+    <mat-card-content>
+      <p>An OTP has been sent to {{ email }}</p>
+      <form [formGroup]="otpForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="outline" class="full-width-input">
+          <mat-label>OTP Code</mat-label>
+          <input matInput type="text" formControlName="otpCode">
+          <mat-error *ngIf="otpForm.get('otpCode')?.touched && otpForm.get('otpCode')?.hasError('required')">OTP is required.</mat-error>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit" [disabled]="otpForm.invalid">Verify</button>
+        <div *ngIf="errorMessage" class="alert alert-danger mt-3">{{ errorMessage }}</div>
+      </form>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button color="accent" (click)="resendOtp()">Resend OTP</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

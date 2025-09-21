@@ -1,0 +1,49 @@
+.notifications-container {
+  padding: 20px;
+}
+
+.notification-list {
+  list-style: none;
+  padding: 0;
+}
+
+.notification-list li {
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+}
+
+.notification-list li:hover {
+  background-color: #f5f5f5;
+}
+
+.notification-list li.read {
+  background-color: #e9e9e9;
+  color: #777;
+}
+
+.timestamp {
+  font-size: 0.8em;
+  color: #999;
+  float: right;
+}
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  max-width: 500px;
+  width: 80%;
+}

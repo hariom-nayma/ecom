@@ -1,0 +1,25 @@
+<div class="notification-panel mat-elevation-z4">
+  <div class="notification-header">
+    <h4>Notifications</h4>
+    <button mat-button color="primary" (click)="markAllAsRead()">Mark all as read</button>
+    <button mat-icon-button (click)="close.emit()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <mat-divider></mat-divider>
+  <div *ngIf="notifications.length === 0; else notificationList" class="no-notifications">
+    <p>No new notifications</p>
+  </div>
+  <ng-template #notificationList>
+    <mat-list>
+      <mat-list-item *ngFor="let notification of notifications"
+                     (click)="onNotificationClick(notification)"
+                     [class.unread]="!notification.isRead">
+        <mat-icon mat-list-icon>{{ getNotificationIcon(notification.type) }}</mat-icon>
+        <div mat-line>{{ notification.message }}</div>
+        <div mat-line class="timestamp">{{ notification.timestamp | date:'short' }}</div>
+      </mat-list-item>
+    </mat-list>
+  </ng-template>
+</div>
+
