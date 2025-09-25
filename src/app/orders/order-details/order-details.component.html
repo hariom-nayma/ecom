@@ -75,8 +75,8 @@
     <div class="price-row">
       <div class="price">
         <!-- assume item.unitPrice is original unit price -->
-        <span class="final-price">{{ order.totalAmount | currency:'INR' }}</span>
-        <span class="original-price" *ngIf="order.savings"><s>{{ order.withoutDiscountAmount | currency:'INR' }}</s></span>
+        <span class="final-price">{{ item.unitPrice| currency:'INR' }}</span>
+        <span class="original-price" *ngIf="order.savings"><s>{{ (item.unitPrice + getItemSavings(item)) | currency:'INR' }}</s></span>
       </div>
 
       <div class="item-saved" *ngIf="getItemSavings(item) > 0">

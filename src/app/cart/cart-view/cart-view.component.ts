@@ -15,6 +15,7 @@ import { Address } from '../../shared/models/address.model';
 import { AddAddressDialogComponent } from '../../user-address/add-address-dialog/add-address-dialog.component';
 import { Product } from '../../shared/models/product.model';
 import { OrderService } from '../../orders/order.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 interface CartItem {
   product: Product;
@@ -51,7 +52,8 @@ export class CartViewComponent implements OnInit {
     private addressService: AddressService,
     private authService: AuthService,
     public dialog: MatDialog,
-    private order: OrderService
+    private order: OrderService,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -119,11 +121,17 @@ export class CartViewComponent implements OnInit {
   this.order.createOrder(orderRequest).subscribe({
     next: (order) => {
       console.log('✅ Order created:', order);
+      this.snackBar.open('Order placed successfully!', 'Close', {
+        duration: 3000,
+      });
       // Optionally navigate to order details
       // this.router.navigate(['/orders', order.id]);
     },
     error: (err) => {
       console.error('❌ Failed to create order:', err);
+      this.snackBar.open('Failed to place order because '+ err.error.message, 'Close', {
+        duration: 3000,
+      }); 
     }
   });
 }

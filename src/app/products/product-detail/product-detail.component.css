@@ -69,3 +69,32 @@
   min-width: 20px; /* Ensure enough space for quantity number */
   text-align: center;
 }
+
+.similar-products {
+  margin-top: 30px;
+}
+
+.similar-products h2 {
+  font-size: 1.8em;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.product-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.product-card img {
+  cursor: pointer;
+}

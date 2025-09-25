@@ -25,11 +25,38 @@
             <div class="quantity-controls">
               <button mat-mini-fab color="warn" (click)="decreaseQuantity(product.id.toString())">-</button>
               <span>{{ getProductQuantity(product.id.toString()) }}</span>
-              <button mat-mini-fab color="primary" (click)="increaseQuantity(product)">+</button>
+              <button mat-mini-fab color="primary" (click)="increaseQuantity(product)" [disabled]="getProductQuantity(product.id.toString()) >= product.stock">+</button>
             </div>
           </ng-template>
         </mat-card-actions>
       </div>
     </div>
   </mat-card>
+
+  <div class="similar-products" *ngIf="similarProducts.length > 0">
+    <h2>Similar Products</h2>
+    <div class="products-grid">
+      <mat-card class="product-card" *ngFor="let similarProduct of similarProducts">
+        <img mat-card-image [src]="similarProduct.imageUrl || 'https://via.placeholder.com/400x300'" alt="{{ similarProduct.name }}" [routerLink]="['/products', similarProduct.id]">
+        <mat-card-header>
+          <mat-card-title>{{ similarProduct.name }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p class="price">{{ similarProduct.discountPrice | currency:"INR" }}</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <ng-container *ngIf="getProductQuantity(similarProduct.id.toString()) === 0; else quantityControls">
+            <button *ngIf="similarProduct.stock!=0" mat-flat-button color="accent" (click)="addToCart(similarProduct)">Add to Cart</button>
+          </ng-container>
+          <ng-template #quantityControls>
+            <div class="quantity-controls">
+              <button mat-mini-fab color="warn" (click)="decreaseQuantity(similarProduct.id.toString())">-</button>
+              <span>{{ getProductQuantity(similarProduct.id.toString()) }}</span>
+              <button mat-mini-fab color="primary" (click)="increaseQuantity(similarProduct)" [disabled]="getProductQuantity(similarProduct.id.toString()) >= similarProduct.stock">+</button>
+            </div>
+          </ng-template>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
 </div>

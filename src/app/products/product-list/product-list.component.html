@@ -118,7 +118,7 @@
             <div class="quantity-controls">
               <button mat-mini-fab color="warn" (click)="decreaseQuantity(product.id.toString())">-</button>
               <span>{{ getProductQuantity(product.id.toString()) }}</span>
-              <button mat-mini-fab color="primary" (click)="increaseQuantity(product)">+</button>
+              <button mat-mini-fab color="primary" (click)="increaseQuantity(product)" [disabled]="getProductQuantity(product.id.toString()) >= product.stock">+</button>
             </div>
           </ng-template>
         </mat-card-actions>

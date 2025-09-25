@@ -81,6 +81,13 @@ export class ProductService {
     return this.http.delete<void>(`${this.productApiUrl}/${id}`);
   }
 
+  getProductsByCategory(categoryName: string, page: number = 0, size: number = 10): Observable<Product[]> {
+    let params = new HttpParams()
+      .set('page', page.toString())
+      .set('size', size.toString());
+    return this.http.get<Product[]>(`${this.categoryApiUrl}/${categoryName}`, { params });
+  }
+
   getCategories(): Observable<ProductCategory[]> {
     return this.http.get<ProductCategory[]>(this.categoryApiUrl);
   }

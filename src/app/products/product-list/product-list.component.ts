@@ -152,6 +152,10 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
 
   increaseQuantity(product: Product): void {
+    const item = this.cartItems.find(i => i.product.id.toString() === product.id.toString());
+    if (item && item.quantity >= product.stock) {
+      return; // Or show a message
+    }
     this.cartService.addToCart(product);
   }
 
